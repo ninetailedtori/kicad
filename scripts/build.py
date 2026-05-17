@@ -59,10 +59,20 @@ class Repository(TypedDict):
 
 # Metadata
 def _fetch_last_commit_date() -> tuple[int, int, int, int, int, int]:
-    """Get the date of the last commit."""
+    """Get the date of the last commit that touched theme files."""
     try:
         result = subprocess.run(
-            ["git", "log", "-1", "--format=%ct"],
+            [
+                "git",
+                "log",
+                "-1",
+                "--format=%ct",
+                "--",
+                "colors",
+                "resources",
+                "metadata.json",
+                "LICENSE",
+            ],
             capture_output=True,
             text=True,
             check=True,

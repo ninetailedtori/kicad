@@ -10,8 +10,8 @@
   "schema_version": 2,
   "packages": {
     "url": "https://raw.githubusercontent.com/catppuccin/kicad/main/packages.json",
-    "sha256": "48abfcf4ab94853c158415c8060b20605d65baa8a0234f22336ae4457c37d9fe",
-    "update_timestamp": 1779056424,
-    "update_time_utc": "2026-05-17 23:20:24"
+    "sha256": "47dba41b60ea1a50cb0c8ea6d725395d77be294ce91cfd4ad0329087c11c92f8",
+    "update_timestamp": 1779056442,
+    "update_time_utc": "2026-05-17 23:20:42"
   }
 }

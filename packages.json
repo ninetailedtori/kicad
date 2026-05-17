@@ -40,7 +40,7 @@
             "linux"
           ],
           "download_url": "https://github.com/catppuccin/kicad/releases/download/v1.0.0/catppuccin-kicad-v1.0.0.zip",
-          "download_sha256": "cee8a8c296cbee15c38d68920ae466743c48a9fc3667345187d723f927c5d38f",
+          "download_sha256": "3c0470605b2b9eb1dc957a2231dbb5f1a106d8e96bb2a85a6ff95263c1f1734a",
           "download_size": 37233,
           "install_size": 36471
         },
