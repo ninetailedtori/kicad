@@ -1,0 +1,7 @@
+# venvs
+/venv/
+/.venv/
+
+# editors
+/.idea/
+/.vscode/

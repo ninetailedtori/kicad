@@ -1,0 +1,51 @@
+{
+  "packages": [
+    {
+      "$schema": "https://go.kicad.org/pcm/schemas/v2",
+      "name": "Catppuccin",
+      "description": "Soothing pastel theme for KiCad",
+      "description_full": "4 Catppuccin flavors for KiCad, for both eeschema and pcbnew.",
+      "identifier": "com.github.catppuccin.kicad",
+      "type": "colortheme",
+      "author": {
+        "name": "Mae Rosaline",
+        "contact": {
+          "web": "https://github.com/waterlilly-lilly"
+        }
+      },
+      "maintainer": {
+        "name": "Catppuccin Org",
+        "contact": {
+          "web": "https://github.com/catppuccin"
+        }
+      },
+      "category": "theme",
+      "tags": [
+        "theme",
+        "color",
+        "pastel"
+      ],
+      "license": "MIT",
+      "resources": {
+        "github": "https://github.com/catppuccin/kicad"
+      },
+      "versions": [
+        {
+          "version": "0.1.1",
+          "status": "development",
+          "kicad_version": "7.0",
+          "kicad_version_max": "8.0",
+          "platforms": [
+            "windows",
+            "macos",
+            "linux"
+          ],
+          "download_url": "https://github.com/catppuccin/kicad/releases/download/v0.1.1/catppuccin-kicad-0.1.1.zip",
+          "download_sha256": "abc123...",
+          "download_size": 12345,
+          "install_size": 54321
+        }
+      ]
+    }
+  ]
+}
