@@ -1,23 +1,53 @@
-.PHONY: help build lint fmt clean
+.PHONY: help build lint fmt clean uv ci ci-fmt
 
 SCRIPT = scripts/build.py
+STATUS = \033[1m\033[32m==>\033[0m
+
 
 help: ## Show this help
-	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/: /' | column -t -s:
+	@printf "Usage: make [target]\n"
+	@printf ""
+	@printf "Available targets:\n"
+	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/: /' | sed 's/^/  /' | column -t -s:
 
-build: ## Build catppuccin-kicad.zip
-	uv run python $(SCRIPT)
+uv: ## Initialize uv and install dependencies
+	@printf "$(STATUS) Syncing dependencies\n"
+	uv sync
 
 lint: ## Lint build.py with autofix
+	@printf "$(STATUS) Linting\n"
 	uv run ruff check $(SCRIPT) --fix
 	uv run mypy $(SCRIPT)
 
 fmt: ## Format repository
+	@printf "$(STATUS) Formatting\n"
 	uv run ruff format $(SCRIPT)
 	uv run mdformat .
 	uv run yamlfix .
 
+ci-fmt: ## Format repository (ignore .github)
+	@printf "$(STATUS) Formatting (ignoring .github)\n"
+	uv run ruff format $(SCRIPT)
+	find . -name "*.md" ! -path "./.github/*" -print -exec uv run mdformat {} +
+	uv run yamlfix . --exclude '.github'
+
+build: ## Build catppuccin-kicad.zip
+	@printf "$(STATUS) Building\n"
+	uv run python $(SCRIPT)
+
+all: ## Main target
+	$(MAKE) uv
+	$(MAKE) fmt
+	$(MAKE) build
+
+ci: ## CI target
+	$(MAKE) uv
+	$(MAKE) ci-fmt
+	$(MAKE) build
+
 clean: ## Remove build artifacts
-	rm -f catppuccin-kicad.zip
-	find . -type d -name __pycache__ -delete
-	find . -type d -name .mypy_cache -delete
+	@printf "$(STATUS) Cleaning\n"
+	rm -f "catppuccin-kicad-v*.zip"
+	rm -rf '.venv/'
+	find . -type d -name '__pycache__' -delete
+	find . -type d -name '.mypy_cache' -delete

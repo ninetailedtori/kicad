@@ -3,89 +3,28 @@ name: Build and Release
 
 on:
   push:
-    tags:
-      - v*  # Trigger on version tags like v0.1.1
+    tags: [v*]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          cargo install whiskers  # or your package manager
-      - name: Build theme
-        run: just build
-      - name: Compute SHA256 and sizes
-        id: hash
-        run: |
-          SHA=$(sha256sum catppuccin-kicad.zip | cut -d' ' -f1)
-          DOWNLOAD_SIZE=$(stat -f%z catppuccin-kicad.zip 2>/dev/null || stat -c%s catppuccin-kicad.zip)
-          INSTALL_SIZE=$(unzip -l catppuccin-kicad.zip | tail -1 | awk '{print $1}')
-          TIMESTAMP=$(date +%s)
-          TIME_UTC=$(date -u +'%Y-%m-%d %H:%M:%S')
-          echo "sha=$SHA" >> $GITHUB_OUTPUT
-          echo "dl_size=$DOWNLOAD_SIZE" >> $GITHUB_OUTPUT
-          echo "inst_size=$INSTALL_SIZE" >> $GITHUB_OUTPUT
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
-          echo "time_utc=$TIME_UTC" >> $GITHUB_OUTPUT
-      - name: Update packages.json
-        env:
-          VERSION: ${{ github.ref_name }}
-        run: |
-          python3 << 'EOF'
-          import json
-          from datetime import datetime
-          version = "${{ env.VERSION }}"[1:]  # Strip 'v' prefix
-          with open('packages.json', 'r') as f:
-              data = json.load(f)
-
-          # Update version entry
-          data['packages'][0]['versions'][0] = {
-              "version": version,
-              "status": "stable",  # or "development"
-              "kicad_version": "7.0",
-              "kicad_version_max": "8.0",
-              "platforms": ["windows", "macos", "linux"],
-              "download_url": f"https://github.com/catppuccin/kicad/releases/download/{version}/catppuccin-kicad-{version}.zip",
-              "download_sha256": "${{ steps.hash.outputs.sha }}",
-              "download_size": ${{ steps.hash.outputs.dl_size }},
-              "install_size": ${{ steps.hash.outputs.inst_size }}
-          }
-          with open('packages.json', 'w') as f:
-              json.dump(data, f, indent=2)
-          EOF
-      - name: Update repository.json
-        run: |
-          python3 << 'EOF'
-          import json
-          packages_sha = subprocess.run(
-              ["sha256sum", "packages.json"],
-              capture_output=True, text=True
-          ).stdout.split()[0]
-          with open('repository.json', 'r') as f:
-              repo = json.load(f)
-          repo['packages'] = {
-              "url": "https://raw.githubusercontent.com/catppuccin/kicad/main/packages.json",
-              "sha256": packages_sha,
-              "update_timestamp": ${{ steps.hash.outputs.timestamp }},
-              "update_time_utc": "${{ steps.hash.outputs.time_utc }}"
-          }
-          with open('repository.json', 'w') as f:
-              json.dump(repo, f, indent=2)
-          EOF
-      - name: Commit updated metadata
+      - uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Build and update metadata
+        run: make ci
+      - name: Commit and push
         run: |
           git config user.name "Catppuccin Bot"
           git config user.email "bot@catppuccin.com"
           git add packages.json repository.json
-          git commit -m "chore: update PCM metadata for ${{ github.ref_name }}"
-          git push
-      - name: Rename zip for release
-        run: mv catppuccin-kicad.zip catppuccin-kicad-${{ github.ref_name }}.zip
+          git commit -m "chore: update PCM metadata for ${{ github.ref_name }}" || true
+          git push origin main
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
-          files: catppuccin-kicad-${{ github.ref_name }}.zip
-          draft: false
-          prerelease: false
+          files: catppuccin-kicad-v${{ github.ref_name }}.zip
+          target_commitish: main
