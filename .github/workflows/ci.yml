@@ -3,28 +3,36 @@ name: Build and Release
 
 on:
   push:
-    tags: [v*]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: taiki-e/install-action@taplo
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(taplo get pyproject.toml -k package.version)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Set up Python
         uses: actions/setup-python@v6
       - name: Install uv
         uses: astral-sh/setup-uv@v7
+      - name: Set up Whiskers
+        uses: catppuccin/setup-whiskers@v2
       - name: Build and update metadata
         run: make ci
       - name: Commit and push
         run: |
-          git config user.name "Catppuccin Bot"
-          git config user.email "bot@catppuccin.com"
-          git add packages.json repository.json
-          git commit -m "chore: update PCM metadata for ${{ github.ref_name }}" || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add metadata.json packages.json repository.json
+          git commit -m "chore: update PCM metadata for v${{ steps.version.outputs.version }}" || true
           git push origin main
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
-          files: catppuccin-kicad-v${{ github.ref_name }}.zip
-          target_commitish: main
+          files: catppuccin-kicad-v${{ steps.version.outputs.version }}.zip
+          tag_name: v${{ steps.version.outputs.version }}
