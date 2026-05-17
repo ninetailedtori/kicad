@@ -155,10 +155,6 @@ def main() -> int:
     version = _fetch_semver()
     zip_filename = Path(f"catppuccin-kicad-v{version}.zip")
 
-    # Snapshot metadata before whiskers
-    metadata_path = Path("metadata.json")
-    old_metadata = metadata_path.read_text() if metadata_path.exists() else None
-
     print("Running whiskers...")
     if (
         subprocess.run(
@@ -169,17 +165,12 @@ def main() -> int:
         print("Error: whiskers command failed", file=sys.stderr)
         return 1
 
-    # Restore old metadata if whiskers didn't meaningfully change it
-    new_metadata = metadata_path.read_text()
-    if old_metadata and json.loads(old_metadata) == json.loads(new_metadata):
-        metadata_path.write_text(old_metadata)
-
     print(f"Creating {zip_filename}...")
     _build_archive(zip_filename)
 
     mdata, pdata, rdata = _load_json(
         {
-            "metadata": metadata_path,
+            "metadata": Path("metadata.json"),
             "packages": Path("packages.json"),
             "repo": Path("repository.json"),
         }
@@ -196,7 +187,7 @@ def main() -> int:
         ),
         None,
     )
-    if old_version and old_version["download_sha256"] == l_checksum:
+    if old_version is not None and old_version["download_sha256"] == l_checksum:
         print(f"v{version} unchanged, skipping metadata update")
         return 0
 

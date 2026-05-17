@@ -48,6 +48,4 @@ ci: ## CI target
 clean: ## Remove build artifacts
 	@printf "$(STATUS) Cleaning\n"
 	rm -f "catppuccin-kicad-v*.zip"
-	rm -rf '.venv/'
-	find . -type d -name '__pycache__' -delete
-	find . -type d -name '.mypy_cache' -delete
+	rm -rf '.venv/' '__pycache__' '.mypy_cache'
