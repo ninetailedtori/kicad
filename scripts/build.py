@@ -264,7 +264,7 @@ def main() -> int:
         "kicad_version": "7.0",
         # "kicad_version_max": "10.0",
         "platforms": ["windows", "macos", "linux"],
-        "download_url": f"https://github.com/catppuccin/kicad/releases/download/v{version}/{zip_filename.name}",
+        "download_url": f"https://github.com/ninetailedtori/kicad/releases/download/v{version}/{zip_filename.name}",
         "download_sha256": l_checksum,
         "download_size": zip_filename.stat().st_size,
         "install_size": _calc_archive_size(zip_filename),
@@ -318,7 +318,7 @@ def main() -> int:
         cast(
             object,
             {
-                "url": "https://raw.githubusercontent.com/catppuccin/kicad/main/packages.json",
+                "url": "https://raw.githubusercontent.com/ninetailedtori/kicad/next/packages.json",
                 "sha256": new_packages_hash,
                 "update_timestamp": timestamp,
                 "update_time_utc": utc_time,
