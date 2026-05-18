@@ -222,7 +222,14 @@ def main() -> int:
         )
         return 1
 
-    source_items = ["colors", "resources", "LICENSE", "metadata.json"]
+    source_items = [
+        "colors",
+        "resources",
+        "LICENSE",
+        "metadata.json",
+        "packages.json",
+        "repository.json"
+    ]
     current_hash = _calc_build_hash(source_items)
 
     if tool_config.get("build-hash") == current_hash:
