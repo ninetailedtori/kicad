@@ -10,8 +10,8 @@
   "schema_version": 2,
   "packages": {
     "url": "https://raw.githubusercontent.com/ninetailedtori/kicad/next/packages.json",
-    "sha256": "5bd5e1363e77e0341ca0f7a7e112b69a6eaa9493fcfc917699278cbf23614643",
-    "update_timestamp": 1779074128,
-    "update_time_utc": "2026-05-18 04:15:28"
+    "sha256": "645ec7a50a1015d9a9694eb179e22d4d5310eccea2aa07a2f80e898c7b17fbf2",
+    "update_timestamp": 1779074184,
+    "update_time_utc": "2026-05-18 03:16:24"
   }
 }
