@@ -96,7 +96,7 @@ def _calc_build_hash(p_items: list[str]) -> str:
 
 
 def _update_build_hash(p_path: Path, current_hash: str) -> None:
-    """Update only the build_hash value, preserving formatting."""
+    """Update only the build-hash value, preserving formatting."""
     content = p_path.read_text()
     content = re.sub(
         r'build-hash\s*=\s*"[^"]*"', f'build-hash = "{current_hash}"', content
@@ -225,7 +225,7 @@ def main() -> int:
     source_items = ["colors", "resources", "LICENSE", "metadata.json"]
     current_hash = _calc_build_hash(source_items)
 
-    if tool_config.get("build_hash") == current_hash:
+    if tool_config.get("build-hash") == current_hash:
         print(f"v{version} sources unchanged, skipping rebuild")
         return 0
 
