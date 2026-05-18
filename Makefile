@@ -22,12 +22,14 @@ lint: ## Lint build.py with autofix
 fmt: ## Format repository
 	@printf "$(STATUS) Formatting\n"
 	uv run ruff format $(SCRIPT)
+	taplo format --config '.taplo.toml'
 	uv run mdformat .
 	uv run yamlfix .
 
 ci-fmt: ## Format repository (ignore .github)
 	@printf "$(STATUS) Formatting (ignoring .github)\n"
 	uv run ruff format $(SCRIPT)
+	find . -name "*.toml" ! -path "./.github/*" -print -exec taplo format --config '.taplo.toml' {} +
 	find . -name "*.md" ! -path "./.github/*" -print -exec uv run mdformat {} +
 	uv run yamlfix . --exclude '.github'
 
@@ -37,11 +39,13 @@ build: ## Build catppuccin-kicad.zip
 
 all: ## Main target
 	$(MAKE) uv
+	$(MAKE) lint
 	$(MAKE) fmt
 	$(MAKE) build
 
 ci: ## CI target
 	$(MAKE) uv
+	$(MAKE) lint
 	$(MAKE) ci-fmt
 	$(MAKE) build
 
