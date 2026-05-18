@@ -1,50 +1,42 @@
 {
-  "packages": [
+  "$schema": "https://go.kicad.org/pcm/schemas/v2",
+  "name": "Catppuccin",
+  "description": "Soothing pastel theme for KiCad",
+  "description_full": "4 Catppuccin flavors for KiCad, for both eeschema and pcbnew.",
+  "identifier": "com.github.catppuccin.kicad",
+  "type": "colortheme",
+  "category": "theme",
+  "platforms": [
+    "windows",
+    "macos",
+    "linux"
+  ],
+  "tags": [
+    "theme",
+    "color",
+    "pastel"
+  ],
+  "author": {
+    "name": "Mae Rosaline",
+    "contact": {
+      "web": "https://github.com/maemachinebroke"
+    }
+  },
+  "maintainer": {
+    "name": "Toria",
+    "contact": {
+      "web": "https://github.com/ninetailedtori"
+    }
+  },
+  "license": "MIT",
+  "resources": {
+    "homepage": "https://github.com/ninetailedtori/kicad"
+  },
+  "versions": [
     {
-      "$schema": "https://go.kicad.org/pcm/schemas/v2",
-      "name": "Catppuccin",
-      "description": "Soothing pastel theme for KiCad",
-      "description_full": "4 Catppuccin flavors for KiCad, for both eeschema and pcbnew.",
-      "identifier": "com.github.catppuccin.kicad",
-      "type": "colortheme",
-      "author": {
-        "name": "Mae Rosaline",
-        "contact": {
-          "web": "https://github.com/maemachinebroke"
-        }
-      },
-      "maintainer": {
-        "name": "Toria",
-        "contact": {
-          "web": "https://github.com/ninetailedtori"
-        }
-      },
-      "category": "theme",
-      "tags": [
-        "theme",
-        "color",
-        "pastel"
-      ],
-      "license": "MIT",
-      "resources": {
-        "github": "https://github.com/ninetailedtori/kicad"
-      },
-      "versions": [
-        {
-          "version": "1.0.0",
-          "status": "stable",
-          "kicad_version": "7.0",
-          "platforms": [
-            "windows",
-            "macos",
-            "linux"
-          ],
-          "download_url": "https://github.com/ninetailedtori/kicad/releases/download/v1.0.0/catppuccin-kicad-v1.0.0.zip",
-          "download_sha256": "36fac6e6cb946b275bd00ec32001425f4af239ae082271ee4856efbe6887ba3e",
-          "download_size": 38314,
-          "install_size": 37450
-        }
-      ]
+      "version": "1.0.0",
+      "status": "stable",
+      "kicad_version": "7.0"
     }
   ]
 }
