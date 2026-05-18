@@ -1,42 +1,65 @@
 {
-  "$schema": "https://go.kicad.org/pcm/schemas/v2",
-  "name": "Catppuccin",
-  "description": "Soothing pastel theme for KiCad",
-  "description_full": "4 Catppuccin flavors for KiCad, for both eeschema and pcbnew.",
-  "identifier": "com.github.catppuccin.kicad",
-  "type": "colortheme",
-  "category": "theme",
-  "platforms": [
-    "windows",
-    "macos",
-    "linux"
-  ],
-  "tags": [
-    "theme",
-    "color",
-    "pastel"
-  ],
-  "author": {
-    "name": "Mae Rosaline",
-    "contact": {
-      "web": "https://github.com/maemachinebroke"
-    }
-  },
-  "maintainer": {
-    "name": "Toria",
-    "contact": {
-      "web": "https://github.com/ninetailedtori"
-    }
-  },
-  "license": "MIT",
-  "resources": {
-    "homepage": "https://github.com/ninetailedtori/kicad"
-  },
-  "versions": [
+  "packages": [
     {
-      "version": "1.0.0",
-      "status": "stable",
-      "kicad_version": "7.0"
+      "$schema": "https://go.kicad.org/pcm/schemas/v2",
+      "name": "Catppuccin",
+      "description": "Soothing pastel theme for KiCad",
+      "description_full": "4 Catppuccin flavors for KiCad, for both eeschema and pcbnew.",
+      "identifier": "com.github.catppuccin.kicad",
+      "type": "colortheme",
+      "author": {
+        "name": "Mae Rosaline",
+        "contact": {
+          "web": "https://github.com/maemachinebroke"
+        }
+      },
+      "maintainer": {
+        "name": "Toria",
+        "contact": {
+          "web": "https://github.com/ninetailedtori"
+        }
+      },
+      "category": "theme",
+      "tags": [
+        "theme",
+        "color",
+        "pastel"
+      ],
+      "license": "MIT",
+      "resources": {
+        "github": "https://github.com/ninetailedtori/kicad"
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "status": "stable",
+          "kicad_version": "7.0",
+          "platforms": [
+            "windows",
+            "macos",
+            "linux"
+          ],
+          "download_url": "https://github.com/ninetailedtori/kicad/releases/download/v1.0.0/catppuccin-kicad-v1.0.0.zip",
+          "download_sha256": "c8b061d5b34c4d6b487d385f72fffb5a3783f88d20d7ceb14825809bf610191b",
+          "download_size": 38215,
+          "install_size": 37351
+        },
+        {
+          "version": "0.1.1",
+          "status": "development",
+          "kicad_version": "7.0",
+          "kicad_version_max": "8.0",
+          "platforms": [
+            "windows",
+            "macos",
+            "linux"
+          ],
+          "download_url": "https://github.com/catppuccin/kicad/releases/download/v0.1.1/catppuccin-kicad-0.1.1.zip",
+          "download_sha256": "cdb56ce4550eeff2f226270fb65b5fcd3bff6b217d7b059de0b9718649be6293",
+          "download_size": 14254,
+          "install_size": 37128
+        }
+      ]
     }
   ]
 }

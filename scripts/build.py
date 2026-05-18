@@ -306,7 +306,7 @@ def main() -> int:
     ]
     pdata["packages"][0]["versions"].insert(0, entry)
 
-    _save_json({Path("packages.json"): mdata})
+    _save_json({Path("packages.json"): pdata})
     new_packages_hash = hashlib.sha256(
         Path("packages.json").read_bytes()
     ).hexdigest()
