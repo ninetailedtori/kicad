@@ -14,7 +14,7 @@ jobs:
       - name: Get version
         id: version
         run: |
-          VERSION=$(taplo get pyproject.toml -k package.version)
+          VERSION=$(taplo get --file-path pyproject.toml project.version)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Set up Python
         uses: actions/setup-python@v6

@@ -31,7 +31,7 @@
 [tool.catppuccin-kicad]
   name       = "com.github.catppuccin.kicad"
   status     = "stable"
-  build-hash = "d83d41de331f2fd8336e6d4b4cc9218543a2fdb40710acb554e219253d5a15db"
+  build-hash = "ec1b5113ecc9a2f60ac6808030886ee65fb4f609fa95752746d2af98831f67d3"
 
 [tool.ruff]
   include        = [ "scripts/build.py" ]

@@ -23,14 +23,14 @@
     }
   },
   "maintainer": {
-    "name": "Catppuccin Org",
+    "name": "Toria",
     "contact": {
-      "web": "https://github.com/catppuccin"
+      "web": "https://github.com/ninetailedtori"
     }
   },
   "license": "MIT",
   "resources": {
-    "homepage": "https://github.com/catppuccin/kicad"
+    "homepage": "https://github.com/ninetailedtori/kicad"
   },
   "versions": [
     {
