@@ -3,7 +3,6 @@
 SCRIPT = scripts/build.py
 STATUS = \033[1m\033[32m==>\033[0m
 
-
 help: ## Show this help
 	@printf "Usage: make [target]\n"
 	@printf ""
@@ -12,7 +11,7 @@ help: ## Show this help
 
 uv: ## Initialize uv and install dependencies
 	@printf "$(STATUS) Syncing dependencies\n"
-	uv sync
+	uv sync --all-extras
 
 lint: ## Lint build.py with autofix
 	@printf "$(STATUS) Linting\n"
