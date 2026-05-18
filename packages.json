@@ -10,13 +10,13 @@
       "author": {
         "name": "Mae Rosaline",
         "contact": {
-          "web": "https://github.com/waterlilly-lilly"
+          "web": "https://github.com/maemachinebroke"
         }
       },
       "maintainer": {
-        "name": "Catppuccin Org",
+        "name": "Toria",
         "contact": {
-          "web": "https://github.com/catppuccin"
+          "web": "https://github.com/ninetailedtori"
         }
       },
       "category": "theme",
@@ -27,7 +27,7 @@
       ],
       "license": "MIT",
       "resources": {
-        "github": "https://github.com/catppuccin/kicad"
+        "github": "https://github.com/ninetailedtori/kicad"
       },
       "versions": [
         {
@@ -40,9 +40,9 @@
             "linux"
           ],
           "download_url": "https://github.com/catppuccin/kicad/releases/download/v1.0.0/catppuccin-kicad-v1.0.0.zip",
-          "download_sha256": "3c0470605b2b9eb1dc957a2231dbb5f1a106d8e96bb2a85a6ff95263c1f1734a",
-          "download_size": 37233,
-          "install_size": 36471
+          "download_sha256": "a014648eb1c9dbf6cb3cb42412e04577169bd8a07ff52a85b0fbc699d4c4b14d",
+          "download_size": 38314,
+          "install_size": 37450
         },
         {
           "version": "0.1.1",
@@ -55,9 +55,9 @@
             "linux"
           ],
           "download_url": "https://github.com/catppuccin/kicad/releases/download/v0.1.1/catppuccin-kicad-0.1.1.zip",
-          "download_sha256": "abc123...",
-          "download_size": 12345,
-          "install_size": 54321
+          "download_sha256": "cdb56ce4550eeff2f226270fb65b5fcd3bff6b217d7b059de0b9718649be6293",
+          "download_size": 14254,
+          "install_size": 37128
         }
       ]
     }
