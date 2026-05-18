@@ -228,13 +228,26 @@ def main() -> int:
         "LICENSE",
         "metadata.json",
         "packages.json",
-        "repository.json"
+        "repository.json",
     ]
     current_hash = _calc_build_hash(source_items)
 
     if tool_config.get("build-hash") == current_hash:
         print(f"v{version} sources unchanged, skipping rebuild")
         return 0
+
+    mdata, pdata, rdata = _load_json(
+        {
+            "metadata": Path("metadata.json"),
+            "packages": Path("packages.json"),
+            "repo": Path("repository.json"),
+        }
+    )
+
+    old_packages_hash = hashlib.sha256(
+        Path("packages.json").read_bytes()
+    ).hexdigest()
+    old_repo_str = Path("repository.json").read_text()
 
     print("Running whiskers...")
     if (
@@ -249,14 +262,6 @@ def main() -> int:
     print(f"Creating {zip_filename}...")
     _build_archive(zip_filename)
 
-    mdata, pdata, rdata = _load_json(
-        {
-            "metadata": Path("metadata.json"),
-            "packages": Path("packages.json"),
-            "repo": Path("repository.json"),
-        }
-    )
-
     if not pdata.get("packages") or not pdata["packages"]:
         print("Error: packages.json has no packages", file=sys.stderr)
         return 1
@@ -269,7 +274,6 @@ def main() -> int:
         "version": version_str,
         "status": "stable",
         "kicad_version": "7.0",
-        # "kicad_version_max": "10.0",
         "platforms": ["windows", "macos", "linux"],
         "download_url": f"https://github.com/catppuccin/kicad/releases/download/v{version}/{zip_filename.name}",
         "download_sha256": l_checksum,
@@ -280,12 +284,6 @@ def main() -> int:
     mdata["versions"] = [
         v for v in mdata["versions"] if v["version"] != version_str
     ]
-    pdata["packages"][0]["versions"] = [
-        v
-        for v in pdata["packages"][0]["versions"]
-        if v["version"] != version_str
-    ]
-
     mdata["versions"].insert(
         0,
         cast(
@@ -300,21 +298,26 @@ def main() -> int:
             ),
         ),
     )
+
+    pdata["packages"][0]["versions"] = [
+        v
+        for v in pdata["packages"][0]["versions"]
+        if v["version"] != version_str
+    ]
     pdata["packages"][0]["versions"].insert(0, entry)
 
-    packages_json_str = json.dumps(pdata, indent=2, sort_keys=True)
-    new_packages_hash = hashlib.sha256(packages_json_str.encode()).hexdigest()
+    _save_json({Path("packages.json"): pdata})
+    new_packages_hash = hashlib.sha256(
+        Path("packages.json").read_bytes()
+    ).hexdigest()
 
     try:
-        old_packages_hash = rdata["packages"]["sha256"]
-        old_repo = rdata["packages"]
-        timestamp = old_repo["update_timestamp"]
-        utc_time = old_repo["update_time_utc"]
-
-    except KeyError:
+        old_repo_data = json.loads(old_repo_str)
+        timestamp = old_repo_data["packages"]["update_timestamp"]
+        utc_time = old_repo_data["packages"]["update_time_utc"]
+    except (KeyError, json.JSONDecodeError):
         timestamp = int(l_timestamp.timestamp())
         utc_time = l_timestamp.strftime("%Y-%m-%d %H:%M:%S")
-        old_packages_hash = None
 
     if old_packages_hash != new_packages_hash:
         timestamp = int(l_timestamp.timestamp())
@@ -336,7 +339,6 @@ def main() -> int:
     _save_json(
         {
             Path("metadata.json"): mdata,
-            Path("packages.json"): pdata,
             Path("repository.json"): rdata,
         }
     )
